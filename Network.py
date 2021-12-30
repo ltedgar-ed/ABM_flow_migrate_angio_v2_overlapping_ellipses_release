@@ -36,12 +36,19 @@ def realign_polarity(geom):
             # Phi2 - Realignment angle due to flow
             # Flow vector
             flow_vect = -float(sign(vess.Q))*vess.unit.copy()
+            
+            if (cell.mig_direction == 'with'):
+                flow_vect = float(sign(vess.Q))*vess.unit.copy()
+            
             #flow_vect = -float(sign(vess.Q))*Vect(1., 0., 0.)
             
 #            if (abs(vess.Q) < 1e-10):
 #                flow_vect = pol_old.copy()
                 
             phi2 = findangle2D(pol_old, flow_vect)          
+            
+#            if (i_polarity_shift == True):
+#                phi2 += cell.pol_shift
             
             # Phi3 - Realignment angle due to random walk component
             # Random walk component

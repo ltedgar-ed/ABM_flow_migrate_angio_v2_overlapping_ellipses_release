@@ -6,6 +6,7 @@
 # University of Edinburgh
 # 2019
 
+from math import pi
 from math import sqrt
 from math import acos
 import random as rand
@@ -826,8 +827,18 @@ def findangle2D(v1, v2):
         angle = -angle
         
     return angle
-    
-    
+
+#------------------------------------------------------------------------------
+# Bound angle range to [-pi,pi]
+def anglebound(theta):
+    while (theta > pi):
+        theta = -pi + (theta - pi)
+        
+    while (theta < -pi):
+        theta = pi + (theta + pi)
+        
+    return theta
+
 #------------------------------------------------------------------------------
 # main program
 if __name__ == "__main__":

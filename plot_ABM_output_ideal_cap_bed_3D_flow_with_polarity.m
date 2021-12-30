@@ -12,7 +12,7 @@ vidObj = VideoWriter([erase(file_name, '.mat') '_FLOW_WITH_POLARITY_3D'],'MPEG-4
 vidObj.FrameRate = 15;
 vidObj.Quality = 100;
 open(vidObj);
-plot_every = 0.5;
+plot_every = 1.0;
 
 cd(curr_dir)
 
@@ -97,17 +97,20 @@ end
 leg_tick_labels = cell(length(flow_range)+1,1);
     
 for i = 1:length(flow_range)/2
-    leg_tick_labels{i} = num2str(flow_range(i));
+    leg_tick_labels{i} = num2str(round(flow_range(i),1));
 end
 
 leg_tick_labels{length(flow_range)/2 + 1} = num2str(0);
 
 for i = length(flow_range)/2 + 2:length(flow_range)+1
-    leg_tick_labels{i} = num2str(flow_range(i-1));
+    leg_tick_labels{i} = num2str(round(flow_range(i-1),1));
 end
 
-for t = 1:(plot_every/input.dt):num_timesteps
-%for t = (40/input.dt)+1
+leg_tick_labels{4} = '-1e-5';
+leg_tick_labels{6} = '1e-5';
+
+%for t = 1:(plot_every/input.dt):num_timesteps
+for t = (1/input.dt)+1
     curr_cells = cells{t};
     
     close (1)
@@ -206,7 +209,7 @@ for t = 1:(plot_every/input.dt):num_timesteps
 
         alpha = find_angle2D(pol, r);
 
-        plot_ellipse_on_cylinder(Q, [x0; y0; 0], z_pos, c_pos, Z, R, Ain, Bin, alpha, [0 0 0], 0.5, true)
+        plot_ellipse_on_cylinder(Q, [x0; y0; 0], z_pos, c_pos, Z, R, Ain, Bin, alpha, [0 0 0], 1.0, true)
 
     end
     
@@ -222,8 +225,8 @@ for t = 1:(plot_every/input.dt):num_timesteps
     set(c, 'Ticks', linspace(c.Limits(1),c.Limits(2),9));
     set(c, 'TickLabels', leg_tick_labels);
     c.Label.String = ' flow (\muL/hr)';
-    c.Label.FontSize = 24;
-    c.FontSize = 14;
+    c.Label.FontSize = 28;
+    c.FontSize = 16;
       
     fig = gcf;
     pos = fig.Position;

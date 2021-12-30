@@ -7,6 +7,9 @@
 # 2019
 
 import sys
+
+from math import pi
+
 from random_seed_numbers import *
 
 #------------------------------------------------------------------------------
@@ -16,7 +19,7 @@ i_on_linux = False
 
 # Uncomment if running from bash script in the command line
 #i_run = int(sys.argv[1])
-i_run = 1
+i_run = 16
 
 # Uncomment if running as stand alone in Spyder
 i_branch_alpha = 0.5
@@ -40,7 +43,7 @@ i_Pext = 0*12.96
 i_fsi_linear_PD = False
 
 # Time step size
-i_EndTime = 1
+i_EndTime = 96
 i_poe_dt = 0.5
 
 # Number of time steps
@@ -57,9 +60,10 @@ i_poe_Bout = 1.5*i_poe_Bin
 i_poe_eta = 3.
 
 # Force paramters (N*)
-i_poe_kmig = 0.*i_poe_eta
-i_poe_krep = 9.*i_poe_eta
-i_poe_katt = 0*i_poe_eta
+i_poe_kmig = 3.*i_poe_eta
+i_poe_krep = 1.*i_poe_eta
+i_poe_katt = (1/3)*i_poe_eta
+#i_poe_katt = 0
 
 i_find_acc_free = True
 i_del_vel_min = 1e-2
@@ -87,8 +91,9 @@ i_w2 = 1.0                                                                      
 i_w3 = 0.0                                                                        # Polarization weight - random walk component
 i_w1 = 1 - i_w2 - i_w3                                                            # Polarization weight - persistence component
 
-
-
+i_pol_subpop = True
+i_subpop = 0.5
+i_polshift_label = "_polsubpop_" + str(i_subpop)
 
 # -------------------------
 # demo vess model parameters
@@ -212,16 +217,19 @@ if (i_sim_type == "PD curve"):
     
 # Add force transmission parameter info to the file name    
 if (i_poe_krep != 0.):
-    i_out_filename += "_krep_" + "{0:.2f}".format(i_poe_krep)
+    i_out_filename += "_kext_" + "{0:.2f}".format(i_poe_krep)
         
 if (i_poe_katt != 0.):
-    i_out_filename += "_katt_" + "{0:.2f}".format(i_poe_katt)
+    i_out_filename += "_kcoh_" + "{0:.2f}".format(i_poe_katt)
 
 if (i_poe_kmig != 0.):
     i_out_filename += "_kmig_" + "{0:.2f}".format(i_poe_kmig)   
 
 if (i_bifurcation_rule == 2):
     i_out_filename += "_BF2"
+
+if (i_pol_subpop == True):
+    i_out_filename += i_polshift_label
     
 # Add run number to the output file name
 i_out_filename += ("_run" + str(i_run))

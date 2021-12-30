@@ -97,23 +97,26 @@ end
 leg_tick_labels = cell(length(flow_range)+1,1);
     
 for i = 1:length(flow_range)/2
-    leg_tick_labels{i} = num2str(flow_range(i));
+    leg_tick_labels{i} = num2str(round(flow_range(i),1));
 end
 
 leg_tick_labels{length(flow_range)/2 + 1} = num2str(0);
 
 for i = length(flow_range)/2 + 2:length(flow_range)+1
-    leg_tick_labels{i} = num2str(flow_range(i-1));
+    leg_tick_labels{i} = num2str(round(flow_range(i-1),1));
 end
 
+leg_tick_labels{4} = '-1e-5';
+leg_tick_labels{6} = '1e-5';
+
 %for t = 1:(plot_every/input.dt):num_timesteps
-for t = (90/input.dt)+1
+for t = (1/input.dt)+1
     curr_cells = cells{t};
     
     close (1)
     figure(1), hold on,
     %axis([-0.1*maxmax 1.1*maxmax (ymax/2)-1.2*maxmax/2 (ymax/2)+1.2*maxmax/2 -1.2*maxmax/2 1.2*maxmax/2])
-    axis([max(nodes(:,1))/2-50 max(nodes(:,1))/2+50 max(nodes(:,2))/2-50 max(nodes(:,2))/2+50 -1.2*maxmax/2 1.2*maxmax/2])
+    axis([0 200 20 220 -100 100])
     
     for v = 1:num_vess
         x0 = nodes(vess_conn(v, 1), 1);

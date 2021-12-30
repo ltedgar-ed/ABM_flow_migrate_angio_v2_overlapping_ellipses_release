@@ -6,7 +6,8 @@
 # 2019
 
 import random as rand
-
+from math import pi
+from Input import *
 from LTETools import *
 
 #------------------------------------------------------------------------------
@@ -42,6 +43,20 @@ class ECell:
         polarity : Vect
         self.polarity = polvect
     
+        # Polarity shift 
+        pol_shift : float
+        #self.pol_shift = rand.vonmisesvariate(pi, i_polshift_kappa) - pi
+        #self.pol_shift = 0
+        
+#        if (rand.uniform(0,1) < i_polshift_subpop):
+#            self.pol_shift = anglebound(self.pol_shift + pi)
+            
+        mig_direction : str
+        self.mig_direction = 'against'
+        
+        if (rand.uniform(0,1) < i_subpop):
+            self.mig_direction = 'with'
+        
         # Migration idicator (+1 for upstream/against vessel unit vector, -1 for downstream/along vessel unit vector, 0 for not migrating)
         migrate : int
         self.migrate = 0
